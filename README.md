@@ -2,8 +2,8 @@
 
 ## Setup do ambiente de desenvolvimento Node.js
 
-- [ ] Setup Typescript
-- [ ] Eslint
+- [x] Setup Typescript
+- [x] Eslint
 - [ ] Jest + Typescript
 - [ ] Setup de testes de integração com Supertest + types
 - [ ] Setup do servidor Node.js com Overnightjs (express)
