@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "build": "npx tsc",
     "prestart": "yarn build",
     "start": "node dist/src/index.js",
@@ -34,7 +35,9 @@
     "@typescript-eslint/parser": "^5.21.0",
     "eslint": "^8.14.0",
     "git-commit-msg-linter": "^4.1.1",
+    "husky": "^8.0.1",
     "jest": "^28.1.0",
+    "lint-staged": "^12.4.2",
     "prettier": "^2.6.2",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.3",
