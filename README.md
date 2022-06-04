@@ -4,9 +4,9 @@
 
 - [x] Setup Typescript
 - [x] Eslint
-- [ ] Jest + Typescript
-- [ ] Setup de testes de integração com Supertest + types
-- [ ] Setup do servidor Node.js com Overnightjs (express)
+- [x] Jest + Typescript
+- [x] Setup de testes de integração com Supertest + types
+- [x] Setup do servidor Node.js com Overnightjs (express)
 
 ## Integração com o serviço de meteorologia externo
 
