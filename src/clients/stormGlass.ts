@@ -54,6 +54,9 @@ export class StormGlass {
           lat,
           lng,
         },
+        headers: {
+          Authorization: 'fake-token',
+        },
       }
     );
 
