@@ -63,12 +63,6 @@ describe('StormGlass client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
-    // class FakeAxiosError extends Error {
-    //   constructor(public response: object) {
-    //     super();
-    //   }
-    // }
-
     const sut = makeRejectedSut({
       response: {
         status: 429,
