@@ -1,21 +1,20 @@
-import * as HTTPService from '@src/services/request';
+import * as HTTPUtil from '@src/utils/request';
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassWeather3HoursFixture from '@test/fixtures/stormglass_weather_3_hours.json';
 import stormGlassNormalized3HoursFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
 
-jest.mock('@src/services/request');
+jest.mock('@src/utils/request');
 
 describe('StormGlass client', () => {
-  const MockedRequestClass = HTTPService.Request as jest.Mocked<
-    typeof HTTPService.Request
+  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<
+    typeof HTTPUtil.Request
   >;
-  const mockedRequest =
-    new HTTPService.Request() as jest.Mocked<HTTPService.Request>;
+  const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
 
   const makeResolvedSut = (response: unknown): StormGlass => {
     mockedRequest.get.mockResolvedValue({
       data: response,
-    } as HTTPService.Response);
+    } as HTTPUtil.Response);
     return new StormGlass(mockedRequest);
   };
 

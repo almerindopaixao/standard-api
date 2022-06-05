@@ -1,7 +1,7 @@
 import config, { IConfig } from 'config';
 
-import * as HTTPService from '@src/services/request';
-import { InternalError } from '@src/errors/InternalError';
+import * as HTTPUtil from '@src/utils/request';
+import { InternalError } from '@src/utils/errors/InternalError';
 
 export interface StormGlassPointSource {
   [key: string]: number;
@@ -65,7 +65,7 @@ export class StormGlass {
 
   private readonly stormGlassAPISource = 'noaa';
 
-  constructor(private request = new HTTPService.Request()) {}
+  constructor(private request = new HTTPUtil.Request()) {}
 
   public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
     try {
@@ -86,7 +86,7 @@ export class StormGlass {
 
       return this.normalizedStormGlassResponse(data);
     } catch (error) {
-      if (!HTTPService.Request.isRequestError(error))
+      if (!HTTPUtil.Request.isRequestError(error))
         throw new ClientRequestError(error.message);
 
       const { status, data } = error.response;
