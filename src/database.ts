@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import config, { IConfig } from 'config';
 import { connect as mongooseConnect, connection } from 'mongoose';
 
