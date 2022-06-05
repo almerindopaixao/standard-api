@@ -1,0 +1,7 @@
+{
+  "App": {
+      "database": {
+        "mongoUrl": "MONGODB_URL"
+      }
+  }
+}
