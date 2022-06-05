@@ -1,21 +1,27 @@
+import * as HTTPService from '@src/services/request';
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassWeather3HoursFixture from '@test/fixtures/stormglass_weather_3_hours.json';
 import stormGlassNormalized3HoursFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
-import axios, { AxiosStatic } from 'axios';
 
-jest.mock('axios');
+jest.mock('@src/services/request');
 
 describe('StormGlass client', () => {
-  const mockedAxios = axios as jest.Mocked<AxiosStatic>;
+  const MockedRequestClass = HTTPService.Request as jest.Mocked<
+    typeof HTTPService.Request
+  >;
+  const mockedRequest =
+    new HTTPService.Request() as jest.Mocked<HTTPService.Request>;
 
   const makeResolvedSut = (response: unknown): StormGlass => {
-    mockedAxios.get.mockResolvedValue({ data: response });
-    return new StormGlass(mockedAxios);
+    mockedRequest.get.mockResolvedValue({
+      data: response,
+    } as HTTPService.Response);
+    return new StormGlass(mockedRequest);
   };
 
   const makeRejectedSut = (error: unknown): StormGlass => {
-    mockedAxios.get.mockRejectedValue(error);
-    return new StormGlass(mockedAxios);
+    mockedRequest.get.mockRejectedValue(error);
+    return new StormGlass(mockedRequest);
   };
 
   it('Should return the normalized forecast from the StormGlass service', async () => {
@@ -63,6 +69,7 @@ describe('StormGlass client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
+    MockedRequestClass.isRequestError.mockReturnValue(true);
     const sut = makeRejectedSut({
       response: {
         status: 429,
