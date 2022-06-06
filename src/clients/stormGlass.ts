@@ -73,7 +73,7 @@ export class StormGlass {
         `${stormGlassResourceConfig.get('apiUrl')}/weather/point`,
         {
           params: {
-            params: this.stormGlassAPIParams,
+            params: this.stormGlassAPIParams.join(','),
             source: this.stormGlassAPISource,
             lat,
             lng,
