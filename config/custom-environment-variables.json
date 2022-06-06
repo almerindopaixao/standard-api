@@ -2,6 +2,11 @@
   "App": {
       "database": {
         "mongoUrl": "MONGODB_URL"
-      }
+      },
+      "resources": {
+        "StormGlass": {
+            "apiToken": "X_API_KEY"
+        }
+    }
   }
 }

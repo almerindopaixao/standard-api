@@ -14,7 +14,8 @@
     "style:check": "npx prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "npx prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "test:unit": "npx jest --passWithNoTests",
-    "test:functional": "npx jest --projects ./test --runInBand --passWithNoTests"
+    "test:functional": "npx jest --projects ./test --runInBand --passWithNoTests",
+    "test": "yarn test:unit && yarn test:functional"
   },
   "keywords": [],
   "author": "Almerindo Paixão",
