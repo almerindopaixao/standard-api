@@ -2,7 +2,6 @@
     "*.ts": [
       "yarn lint:fix",
       "yarn style:fix",
-      "yarn test:unit",
-      "yarn test:functional"
+      "yarn test"
     ]
 }
