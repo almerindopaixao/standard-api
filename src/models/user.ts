@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { AuthService } from '@src/services/auth';
-import { EmailValidator } from '@src/validators/email';
+import { EmailValidator } from '@src/utils/validators/email';
 export interface User {
   _id?: string;
   name: string;
