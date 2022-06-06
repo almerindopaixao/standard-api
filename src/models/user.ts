@@ -7,22 +7,36 @@ export interface User {
   password: string;
 }
 
+export enum CUSTOM_VALIDATION {
+  DUPLICATED = 'DUPLICATED',
+}
+
 interface Usermodel extends Omit<User, '_id'>, Document {}
 
 const schema = new Schema(
   {
     name: {
       type: String,
-      require: [true, 'Name is required'],
+      required: [true, 'is required.'],
     },
     email: {
       type: String,
-      required: [true, 'E-mail is required'],
-      unique: [true, 'E-mail must be unique'],
+      required: [true, 'is required.'],
+      unique: [true, 'must be unique.'],
+      validate: {
+        validator: async (email: string) => {
+          const emailCount = await mongoose.models.User.countDocuments({
+            email,
+          });
+          return !emailCount;
+        },
+        type: CUSTOM_VALIDATION.DUPLICATED,
+        message: 'already exists in the database.',
+      },
     },
     password: {
       type: String,
-      required: [true, 'Password is required'],
+      required: [true, 'is required.'],
     },
   },
   {
