@@ -1,5 +1,6 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
-
+import { AuthService } from '@src/services/auth';
+import { EmailValidator } from '@src/validators/email';
 export interface User {
   _id?: string;
   name: string;
@@ -24,12 +25,7 @@ const schema = new Schema(
       required: [true, 'is required.'],
       unique: [true, 'must be unique.'],
       validate: {
-        validator: async (email: string) => {
-          const emailCount = await mongoose.models.User.countDocuments({
-            email,
-          });
-          return !emailCount;
-        },
+        validator: EmailValidator.duplicated,
         type: CUSTOM_VALIDATION.DUPLICATED,
         message: 'already exists in the database.',
       },
@@ -49,5 +45,19 @@ const schema = new Schema(
     },
   }
 );
+
+schema.pre<Usermodel>('save', async function (next): Promise<void> {
+  try {
+    if (!this.password || !this.isModified('password')) return next();
+
+    const hash = await AuthService.hashPassword(this.password);
+
+    this.password = hash;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
 
 export const User: Model<Usermodel> = mongoose.model('User', schema);
