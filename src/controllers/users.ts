@@ -31,7 +31,12 @@ export class UsersController extends BaseController {
         error: 'User not found',
       });
 
-    if (!(await AuthService.comparePassword(password, user.password)))
+    if (
+      !(await AuthService.comparePassword(
+        String(password),
+        String(user.password)
+      ))
+    )
       return res.status(401).send({
         code: 401,
         error: 'Password does not match',

@@ -13,6 +13,7 @@ export interface Beach {
   lng: number;
   name: string;
   position: BeachPosition;
+  user: string;
 }
 
 const schema = new Schema(
@@ -21,6 +22,11 @@ const schema = new Schema(
     lng: { type: Number, required: true },
     name: { type: String, required: true },
     position: { type: String, required: true },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   {
     toJSON: {

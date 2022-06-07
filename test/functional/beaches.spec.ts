@@ -1,7 +1,34 @@
-import { Beach } from '@src/models/beach';
+import { Beach, BeachPosition } from '@src/models/beach';
+import { User } from '@src/models/user';
+import { AuthService } from '@src/services/auth';
 
 describe('Beaches functional tests', () => {
-  beforeAll(async () => Beach.deleteMany({}));
+  const defaultUser = {
+    name: 'John Doe',
+    email: 'john@email.com',
+    password: '12345',
+  };
+
+  let token: string;
+
+  beforeEach(async () => {
+    await Beach.deleteMany({});
+    await User.deleteMany({});
+    const user = await new User(defaultUser).save();
+    token = AuthService.generateToken(user.toJSON());
+  });
+
+  afterAll(async () => {
+    await Beach.deleteMany({});
+    await User.deleteMany({});
+  });
+
+  const makeResponse = (beach: object, newToken: string) => {
+    return global.testRequest
+      .post('/beaches')
+      .set({ 'x-access-token': newToken })
+      .send(beach);
+  };
 
   describe('When creating a beach', () => {
     it('Should create a beach with success', async () => {
@@ -9,10 +36,11 @@ describe('Beaches functional tests', () => {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: 'E',
+        position: BeachPosition.E,
       };
 
-      const response = await global.testRequest.post('/beaches').send(newBeach);
+      const response = await makeResponse(newBeach, token);
+
       expect(response.status).toBe(201);
       expect(response.body).toEqual(expect.objectContaining(newBeach));
     });
@@ -22,10 +50,10 @@ describe('Beaches functional tests', () => {
         lat: 'invalid_string',
         lng: 151.289824,
         name: 'Manly',
-        position: 'E',
+        position: BeachPosition.E,
       };
 
-      const response = await global.testRequest.post('/beaches').send(newBeach);
+      const response = await makeResponse(newBeach, token);
 
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -43,10 +71,10 @@ describe('Beaches functional tests', () => {
         lat: 'invalid_string',
         lng: 151.289824,
         name: 'Manly',
-        position: 'E',
+        position: BeachPosition.E,
       };
 
-      const response = await global.testRequest.post('/beaches').send(newBeach);
+      const response = await makeResponse(newBeach, token);
 
       expect(response.status).toBe(500);
     });
