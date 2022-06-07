@@ -3,6 +3,10 @@
       "database": {
         "mongoUrl": "MONGODB_URL"
       },
+      "auth": {
+        "key": "TOKEN_SECRETS",
+        "tokenExpiresIn": "TOKEN_EXPIRES_IN"
+      },
       "resources": {
         "StormGlass": {
             "apiToken": "X_API_KEY"
