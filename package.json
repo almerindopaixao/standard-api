@@ -6,7 +6,6 @@
   "scripts": {
     "prepare": "husky install",
     "build": "npx tsc",
-    "prestart": "yarn build",
     "start": "node dist/src/index.js",
     "dev": "npx ts-node-dev 'src/index.ts'",
     "lint": "npx eslint ./src ./test --ext .ts",
@@ -18,6 +17,9 @@
     "test": "yarn test:unit && yarn test:functional"
   },
   "keywords": [],
+  "engines": {
+    "node": "16"
+  },
   "author": "Almerindo Paixão",
   "license": "ISC",
   "dependencies": {
