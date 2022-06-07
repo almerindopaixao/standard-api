@@ -1,6 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { AuthService } from '@src/services/auth';
 import { EmailValidator } from '@src/utils/validators/email';
+import logger from '@src/logger';
 export interface User {
   _id?: string;
   name: string;
@@ -56,6 +57,7 @@ schema.pre<Usermodel>('save', async function (next): Promise<void> {
 
     return next();
   } catch (error) {
+    logger.error(`Error hashing password for the user ${this.name}`, error);
     return next(error);
   }
 });
