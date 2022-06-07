@@ -1,4 +1,5 @@
 import './utils/module-alias';
+import logger from '@src/logger';
 import bodyParser from 'body-parser';
 import { Server } from '@overnightjs/core';
 import { Application } from 'express';
@@ -47,7 +48,7 @@ export class SetupServer extends Server {
 
   public start(): void {
     this.app.listen(this.port, () => {
-      console.log(`🚀 Server listening on port: ${this.port}`);
+      logger.info(`🚀 Server listening on port: ${this.port}`);
     });
   }
 }
