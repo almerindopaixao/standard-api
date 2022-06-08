@@ -1,6 +1,7 @@
 import './utils/module-alias';
-import logger from '@src/logger';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import logger from '@src/logger';
 import { Server } from '@overnightjs/core';
 import { Application } from 'express';
 import * as database from '@src/database';
@@ -12,11 +13,14 @@ export class SetupServer extends Server {
     super();
   }
 
-  private async setupExpress(): Promise<void> {
+  private setupExpress(): void {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
-    this.setupController();
-    await this.databaseSetup();
+    this.app.use(
+      cors({
+        origin: '*',
+      })
+    );
   }
 
   private setupController(): void {
@@ -39,7 +43,9 @@ export class SetupServer extends Server {
   }
 
   public async init(): Promise<void> {
-    await this.setupExpress();
+    this.setupExpress();
+    this.setupController();
+    await this.databaseSetup();
   }
 
   public getApp(): Application {
